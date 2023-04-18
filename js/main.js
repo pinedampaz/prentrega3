@@ -27,7 +27,6 @@ function retornoFilaHTML(articulo) {
 }
 
 function cargarArticulos(array) {
-    // tbody.innerHTML = ""
     array.forEach(element => {
         tbody.innerHTML += retornoFilaHTML(element)
     })
@@ -41,8 +40,6 @@ function clickBotones(){
     for (boton of buttons){
         boton.addEventListener("click", (e)=> {
             agregarArticulo(e.target.id)
-            // console.log(e.target.id)
-            // console.log("Has clickeado el producto")
         })
     }
 }
@@ -58,19 +55,19 @@ function agregarArticulo(id){
 
 function guardarCompra(carrito){
     if (carrito.length>0){
-        localStorage.setItem("carroCompra", JSON.stringify(caarito))
+        localStorage.setItem("carroCargado", JSON.stringify(carrito))
     }
 }
-// function finalizarCompra() {
-//     if (carrito.lenght > 0) {
-//         const shopping = new Compra(carrito)
-//         alert(`El valor de la compra es de € ${shopping.obtenerSubtotal()}`)
-//         let respuesta = confirm("Desea realizar el pago?")
-//         if (respuesta) {
-//             alert(shopping.confirmarCompra())
-//             carrito.length = 0
-//         }
-//     } else {
-//         console.warn("El carro se encuentra vacio")
-//     }
-// 
+
+function recuperarCompra () {
+    const compraRecuperada = JSON.parse(localStorage.getItem("carroCargado"))
+    if (compraRecuperada.length > 0){
+        carrito.push(...compraRecuperada)
+    }
+}
+recuperarCompra()
+
+function comprar(){
+    let totalCompra = carrito.reduce((acc, articulo)=> acc + articulo.precio, 0)
+    alert ("El total de tu compra es de €"+ totalCompra)
+}
